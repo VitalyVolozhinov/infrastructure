@@ -7,7 +7,7 @@ export PATH=$GOPATH/bin:$PATH
 
 #### Parameters todo: define as global parameters in terraform
 export CHAIN_ID="osmosis-clean-testnet-X"
-export VERSION="v4.2.0"
+export VERSION="v6.0.0"
 
 cd /root/
 
@@ -15,7 +15,7 @@ cd /root/
 
 # Need to install again todo: figure out why the binary is not recogniced even though it was installed already.
 cd osmosis
-git checkout v4.2.0
+git checkout v6.0.0
 make install
 
 #TODO Should be replaced with dynamically generated where seed is written to a local file
@@ -30,6 +30,7 @@ osmosisd add-genesis-account faucet 2000000000000uosmo,2000000000uion,2000000000
 osmosisd add-genesis-account clawback 2000000000uosmo,2000000000uion,2000000000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --keyring-backend=test
 # osmosisd add-genesis-account keplr1 2000000000uosmo,2000000000uion,2000000000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --keyring-backend=test
 
+jq '.app_state.poolincentives.distr_info = {"total_weight": "1000","records": [{"gauge_id": "0","weight": "1000"}]}' /root/.osmosisd/config/genesis.json > /root/.osmosisd/config/genesis.json.tmp && mv /root/.osmosisd/config/genesis.json.tmp /root/.osmosisd/config/genesis.json
 osmosisd gentx validator 1000000000000uosmo --chain-id=$CHAIN_ID --commission-rate=0.05 --commission-max-change-rate=0.01 --commission-max-rate=1.0 --keyring-backend=test
 osmosisd collect-gentxs
 

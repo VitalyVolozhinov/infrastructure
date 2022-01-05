@@ -4,7 +4,7 @@ set -e
 
 #### Parameters
 export CHAIN_ID="osmosis-clean-testnet-X"
-export VERSION="v4.2.0"
+export VERSION="v6.0.0"
 
 #### Initial node setup
 sudo apt-get update
